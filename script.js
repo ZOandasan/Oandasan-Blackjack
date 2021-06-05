@@ -72,7 +72,11 @@ function initialize(){
 }    
 
 //Create helper function to manage the deck of cards
-function manageDeck() {}
+function manageDeck() {
+  let newDeck = sortedDeck;
+  newDeck = newDeck.forEach()
+
+}
     //In the manageDeck function, create a clone of the cardsArray constant.
     //Until the clone is empty, generate a random number between 0 and the cardsArrayClone.length.
     //Pop the random values into a new array, which will be the output.
