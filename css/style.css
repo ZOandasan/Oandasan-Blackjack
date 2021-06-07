@@ -2,18 +2,44 @@
   box-sizing: border-box;
 }
 
+:root {
+    --accent-light: rgba(255, 240, 10, 0.5); /* declares object that other styles can call to */
+    --accent-dark: rgba(50, 0, 50, 0.9)
+}
+
 body {
   display: grid;
   gap: 1px;
-  grid-template-columns: 100%;
-  grid-template-rows: 20% 20% 20% 20% 10%;
+  grid-template-rows: 25% 15% 20% 20% 10%;
   height: 100vh;
   margin: 0;
   font-family: Helvetica;
 }
 
-header, footer, aside, main, div {
+header, footer, div {
+  height: 10vmin;
+  font-size: 8vmin;
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+header {
+  margin: 5px;
+}
+
+button {
+  height: 10vmin;
+  font-size: 6vmin;
+  font-weight: bold;
+  padding: 2vmin;
+  margin-top: 4vmin;
+  background-color: var(--accent-light);
+  color: var(--accent-dark);
+  border-radius: 30%;
+}
+
+button:hover {
+  background-color: var(--accent-dark);
+  color: var(--accent-light);
 }

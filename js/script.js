@@ -51,6 +51,8 @@ initialize();
 
 //Initialize the state variables in the initialize function.
 function initialize(){
+  //set the Win Loss ratio header to a string of 'playerWins : dealerWins'
+  winLossElem.innerText = `Player Wins = ${playerWins} : Dealer Wins = ${dealerWins}`;
   //Set gameState to zero
   gameState = 0;
   //Set playerHand and dealerHand as empty arrays
@@ -210,20 +212,18 @@ function handleDealerHandElem(){
 //Create a helper function to calculate and display win loss ratio
 function handleWinLoss() {
     function updateWinLossWindow(){
-      //set the Win Loss ratio header to a string of 'playerWins : dealerWins'
-      winLossElem.innerText = `Player Wins = ${playerWins} : Dealer Wins = ${dealerWins}`;
     }
     //Setting Windows to reflect game result
     if (gameState === 'Player Wins'){
       ++playerWins;
       updateWinLossWindow();
-
+      winLossElem.innerText = `Player Wins the Round`;
     } else if (gameState === 'Dealer Wins'){
       ++dealerWins;
       updateWinLossWindow();
-
+      winLossElem.innerText = `Dealer Wins the Round`;
     } else if (gameState === 'Tie Game'){
-
+      winLossElem.innerText = `Tie Game`;
     }
 }
 
