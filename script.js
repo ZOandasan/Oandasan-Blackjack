@@ -48,7 +48,6 @@ document.querySelector('#btn_stand').addEventListener('click', pressStand); //St
 /*----- functions -----*/
 //Call Initialize Function
 initialize();
-deterinePoints();
 
 //Initialize the state variables in the initialize function.
 function initialize(){
@@ -98,9 +97,9 @@ function deterinePoints() {
   dealerTotal = 0;
   //Create a function substituting the card literal with its points.
   function isolateValue(card){
-    console.log(card)
     let cardValue = card.split('');
     let value = cardValue.pop();
+    console.log('Value = ' + value);
     if (value === 'A') {
       return 11;
     } else if (value === '9') {
@@ -126,39 +125,46 @@ function deterinePoints() {
   
   playerHand.forEach(function(card){
     //Sum up the points, and apply to playerTotal
-    let total;
-    total += isolateValue(card);
+    playerTotal += isolateValue(card);
     //Handle Aces
-    /*
-    console.log(total);
-    if (playerHand.some(function(card){ return card === 'cA' }) && total > 21 ){
-      console.log('Working');
+    console.log(playerTotal);
+    if (playerHand.some(function(card){ return card === 'cA' }) && playerTotal > 21 ){
+      playerTotal -= 10; 
     }
-    */
+    if (playerHand.some(function(card){ return card === 'dA' }) && playerTotal > 21 ){
+      playerTotal -= 10; 
+    }
+    if (playerHand.some(function(card){ return card === 'hA' }) && playerTotal > 21 ){
+      playerTotal -= 10; 
+    }
+    if (playerHand.some(function(card){ return card === 'sA' }) && playerTotal > 21 ){
+      playerTotal -= 10; 
+    }
   });
   
   
   dealerHand.forEach(function(card){
-    //Sum up the points, and apply to dealerTotal
-    let total;
-    total += isolateValue(card);
+    //Sum up the points, and apply to playerTotal
+    dealerTotal += isolateValue(card);
     //Handle Aces
-
+    console.log(dealerTotal);
+    if (dealerHand.some(function(card){ return card === 'cA' }) && dealerTotal > 21 ){
+      dealerTotal -= 10; 
+    }
+    if (dealerHand.some(function(card){ return card === 'dA' }) && dealerTotal > 21 ){
+      dealerTotal -= 10; 
+    }
+    if (dealerHand.some(function(card){ return card === 'hA' }) && dealerTotal > 21 ){
+      dealerTotal -= 10; 
+    }
+    if (dealerHand.some(function(card){ return card === 'sA' }) && dealerTotal > 21 ){
+      dealerTotal -= 10; 
+    }
   });
 }
 
-//Create helper function to determine the sum of an array. Accept an array as the sole argument
-function sumArray() {}
-    //if the hand has the Ace of Diamonds and the cardTotal is over 21, reduce points by 10.
-    //if the hand has the Ace of Hearts and the cardTotal is over 21, reduce points by 10.
-    //if the hand has the Ace of Spades and the cardTotal is over 21, reduce points by 10.
-    //if the hand has the Ace of Clubs and the cardTotal is over 21, reduce points by 10.
-
-
-
-
 //Create helper function to check win conditions with two variables being arguments (playerTotal, dealerTotal)
-function checkWinCons (playerTotal, dealerTotal) {}
+function checkWinCons () {}
     //if playerTotal is greater than 21, set the game state equal to 'dealer wins'
     //else if the dealerTotal is greater than 21, set the game state equal to 'player wins'
     //else if gamestate is 'waiting to compare' compare the totals of player and dealer. 
@@ -176,7 +182,9 @@ function handleWinLoss() {}
     //set the Win Loss ratio header to a string of 'playerWins : dealerWins'
 
 //Create a render function to apply the values to the interface.
-function render() {}
+function render() {
+  deterinePoints();
+}
     //set DealerTotal equal to sumOfArray function with the dealers hand as the argument
     //set PlayerTotal equal to sumOfArray function with the players hand as the argument
     //assign images based on each of the values in playersHand
