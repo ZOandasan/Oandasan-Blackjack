@@ -73,20 +73,31 @@ function initialize(){
 
 //Create helper function to manage the deck of cards
 function manageDeck() {
-  let newDeck = sortedDeck;
-  newDeck = newDeck.forEach(function (){
-    
-  });
-
+  //In the manageDeck function, create a clone of the cardsArray constant.
+  let tempDeck = sortedDeck;
+  let shuffledArr = [];
+  //Until the clone is empty, generate a random number between 0 and the cardsArrayClone.length.
+  while (tempDeck.length > 0){
+    const rndIdx = Math.floor(Math.random() * tempDeck.length);
+    //Splice the random values into a new array, which will be the output.
+    shuffledArr.push(tempDeck.splice(rndIdx, 1)[0]);
+  }
+  return shuffledArr;
 }
-    //In the manageDeck function, create a clone of the cardsArray constant.
-    //Until the clone is empty, generate a random number between 0 and the cardsArrayClone.length.
-    //Pop the random values into a new array, which will be the output.
+    
+    
+    
 
 //Create helper function to deal out starting hands
-function dealStartHands() {}
-    //Pop the last two elements of the shuffledCards array into the dealersHand array
-    //Pop the last two elements of the shuffledCards array into the dealersHand array
+function dealStartHands() {
+  //Pop the last two elements of the shuffledCards array into the playerHand array
+  playerHand.push(shuffledDeck.pop());
+  playerHand.push(shuffledDeck.pop());
+  //Pop the last two elements of the shuffledCards array into the dealerHand array
+  dealerHand.push(shuffledDeck.pop());
+  dealerHand.push(shuffledDeck.pop());
+}
+    
 
 //Create helper function to determine the sum of an array. Accept an array as the sole argument
 function sumArray() {}
