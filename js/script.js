@@ -1,5 +1,3 @@
-/* PSEUDO CODE FOR PROJECT 1 */
-
 /*----- constants -----*/
 //Define the array of cards containing 52 cards.
 const sortedDeck = [

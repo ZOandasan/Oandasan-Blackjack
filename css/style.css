@@ -3,8 +3,8 @@
 }
 
 :root {
-    --accent-light: rgba(255, 240, 10, 0.5); /* declares object that other styles can call to */
-    --accent-dark: rgba(50, 0, 50, 0.9)
+    --accent-light: rgba(243, 230, 49, 1); /* declares object that other styles can call to */
+    --accent-dark: rgba(50, 0, 50, .8)
 }
 
 body {
@@ -24,8 +24,20 @@ header, footer, div {
   display: flex;
 }
 
-header {
+div#blackjack_header {
   margin: 5px;
+  font: Georgia, Arial, Sans;
+  color: black;
+  background-color: var(--accent-light);
+}
+
+div#blackjack_header > h3 {
+  background-color: white;
+}
+
+div#win_loss_header > h2#win_loss {
+  background-color: var(--accent-dark);
+  color: var(--accent-light);
 }
 
 button {
