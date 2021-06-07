@@ -176,6 +176,14 @@ function checkWinCons() {
   }
 }
 
+function handleHandElem(){
+  let output = '';
+  playerHand.forEach(function(card){
+    output = output + `${card} | `;
+  });
+  currentTotalElem.innerText = output;
+}
+
 //Create a helper function to calculate and display win loss ratio
 function handleWinLoss() {
     function updateWinLossWindow(){
@@ -198,6 +206,8 @@ function handleWinLoss() {
 
 //Create a render function to apply the values to the interface.
 function render() {
+  //Set the current Total Elem to the Player Handle
+  handleHandElem();
   //set reset button property to hidden
   if (gameState === 0){
     resetButtonElem.style.visibility = 'hidden';
@@ -215,9 +225,12 @@ function render() {
 }
 
 //Create a function when the hit Me button is pressed
-function pressHit() {}
-    //pop an element from the shuffled cards array into the playersHand
-    //call render function
+function pressHit() {
+  //pop an element from the shuffled cards array into the playersHand
+  playerHand.push(shuffledDeck.pop());
+  //call render function
+  render();
+}
 
 //Create a function when the stand button is pressed
 function pressStand() {}
