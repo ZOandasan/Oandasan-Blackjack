@@ -32,7 +32,8 @@ let dealerWins = 0;
 //Cash the Win/Loss Ratio header
 const winLossElem = document.getElementById('win_loss');
 //Cash the current total element
-const currentTotalElem = document.getElementById('player_total');
+const playerTotalElem = document.getElementById('player_total');
+const dealerTotalElem = document.getElementById('dealer_total')
 //Cash the Hit Me & Stand & Reset Game buttons
 const hitButtonElem = document.getElementById('btn_hit');
 const standButtonElem = document.getElementById('btn_stand');
@@ -67,7 +68,7 @@ function initialize(){
 //Create helper function to manage the deck of cards
 function manageDeck() {
   //In the manageDeck function, create a clone of the cardsArray constant.
-  let tempDeck = sortedDeck;
+  let tempDeck = [...sortedDeck];
   let shuffledArr = [];
   //Until the clone is empty, generate a random number between 0 and the cardsArrayClone.length.
   while (tempDeck.length > 0){
@@ -117,11 +118,8 @@ function deterinePoints() {
       return 10;
     }
   }
-  
-  playerHand.forEach(function(card){
-    //Sum up the points, and apply to playerTotal
-    playerTotal += isolateValue(card);
-    //Handle Aces
+
+  function handlePlayerAces(){
     if (playerHand.some(function(card){ return card === 'cA' }) && playerTotal > 21 ){
       playerTotal -= 10; 
     }
@@ -134,13 +132,9 @@ function deterinePoints() {
     if (playerHand.some(function(card){ return card === 'sA' }) && playerTotal > 21 ){
       playerTotal -= 10; 
     }
-  });
-  
-  
-  dealerHand.forEach(function(card){
-    //Sum up the points, and apply to playerTotal
-    dealerTotal += isolateValue(card);
-    //Handle Aces
+  }
+
+  function handleDealerAces(){
     if (dealerHand.some(function(card){ return card === 'cA' }) && dealerTotal > 21 ){
       dealerTotal -= 10; 
     }
@@ -153,7 +147,23 @@ function deterinePoints() {
     if (dealerHand.some(function(card){ return card === 'sA' }) && dealerTotal > 21 ){
       dealerTotal -= 10; 
     }
+  }
+  
+  playerHand.forEach(function(card){
+    //Sum up the points, and apply to playerTotal
+    playerTotal += isolateValue(card);
   });
+  handlePlayerAces();
+
+  dealerHand.forEach(function(card){
+    //Sum up the points, and apply to playerTotal
+    dealerTotal += isolateValue(card);
+  });
+  handleDealerAces();
+
+  console.log(dealerTotal);
+  console.log(playerTotal);
+  console.log(" ");
 }
 
 //Create helper function to check win conditions with two variables being arguments (playerTotal, dealerTotal)
@@ -176,75 +186,90 @@ function checkWinCons() {
   }
 }
 
-function handleHandElem(){
+function handlePlayerHandElem(){
   let output = '';
   playerHand.forEach(function(card){
     output = output + `${card} | `;
   });
-  currentTotalElem.innerText = output;
+  playerTotalElem.innerText = output;
+}
+
+function handleDealerHandElem(){
+  let dealerHandCopy = ['XX'];
+  let output = '';
+  dealerHand.forEach(function(card){
+    output = output + `${card} | `;
+  });
+  dealerTotalElem.innerHTML = output;
 }
 
 //Create a helper function to calculate and display win loss ratio
 function handleWinLoss() {
     function updateWinLossWindow(){
       //set the Win Loss ratio header to a string of 'playerWins : dealerWins'
-      winLossElem.innetText = `${playerWins} : ${dealerWins}`;
+      winLossElem.innerText = `${playerWins} : ${dealerWins}`;
     }
     //Setting Windows to reflect game result
     if (gameState === 'Player Wins'){
       ++playerWins;
       updateWinLossWindow();
-      currentTotalElem.innterText  = gameState;
+
     } else if (gameState === 'Dealer Wins'){
       ++dealerWins;
       updateWinLossWindow();
-      currentTotalElem.innterText  = gameState;
+
     } else if (gameState === 'Tie Game'){
-      currentTotalElem.innterText = gameState;
+
     }
 }
 
 //Create a render function to apply the values to the interface.
 function render() {
   //Set the current Total Elem to the Player Handle
-  handleHandElem();
+  handlePlayerHandElem();
+  handleDealerHandElem();
+  //call Determine Points
+  deterinePoints();
+  //assign images based on each of the values in playersHand
+
+
+  //assign images based on each of the values in dealersHand
+
+
+  //call Check Win Cons
+  checkWinCons();
+  //call handle Win Loss
+  handleWinLoss();
   //set reset button property to hidden
   if (gameState === 0){
     resetButtonElem.style.visibility = 'hidden';
   } else {
     resetButtonElem.style.visibility = 'visible';
   }
-  //call Determine Points
-  deterinePoints();
-  //assign images based on each of the values in playersHand
-  //assign images based on each of the values in dealersHand
-  //call Check Win Cons
-  checkWinCons();
-  //call handle Win Loss
-  handleWinLoss();
 }
 
 //Create a function when the hit Me button is pressed
 function pressHit() {
-  //pop an element from the shuffled cards array into the playersHand
-  playerHand.push(shuffledDeck.pop());
-  //call render function
-  render();
+  if (gameState === 0){
+    if (playerTotal < 21){
+      playerHand.push(shuffledDeck.pop());
+    }
+    render();
+  }
 }
 
 //Create a function when the stand button is pressed
-function pressStand() {}
-    //while dealerTotal < 17 Do
-      //pop an element from the shuffled cards array into the dealersHand
-      //call render function
-    //set gamestate is 'waiting to compare'
-    //render
-
-//Create an endgame function
-function endGame() {}
-    //disable hit-me and stand buttons
-    //set reset game button property to visible
-    //call calculate win loss ration function
-
+function pressStand() {
+  if (gameState === 0){
+    while (dealerTotal < 16){
+    dealerHand.push(shuffledDeck.pop());
+    deterinePoints();
+    }
+    if (dealerTotal < 22){
+      gameState = 'Comparing'
+    }
+    render();
+  }
+}
 
 /* Mustafa, Taylor, Henry, & Andy also have Blackjack */
