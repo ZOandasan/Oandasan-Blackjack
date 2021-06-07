@@ -74,7 +74,9 @@ function initialize(){
 //Create helper function to manage the deck of cards
 function manageDeck() {
   let newDeck = sortedDeck;
-  newDeck = newDeck.forEach()
+  newDeck = newDeck.forEach(function (){
+    
+  });
 
 }
     //In the manageDeck function, create a clone of the cardsArray constant.
