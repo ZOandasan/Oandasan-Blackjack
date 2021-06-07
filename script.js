@@ -119,6 +119,7 @@ function deterinePoints() {
     }
   }
 
+  //Handle the Aces in the Players Hand
   function handlePlayerAces(){
     if (playerHand.some(function(card){ return card === 'cA' }) && playerTotal > 21 ){
       playerTotal -= 10; 
@@ -134,6 +135,7 @@ function deterinePoints() {
     }
   }
 
+  //Handle the Aces in the Dealers Hand
   function handleDealerAces(){
     if (dealerHand.some(function(card){ return card === 'cA' }) && dealerTotal > 21 ){
       dealerTotal -= 10; 
@@ -149,21 +151,17 @@ function deterinePoints() {
     }
   }
   
+  //Program that determines the points in both hands.
   playerHand.forEach(function(card){
     //Sum up the points, and apply to playerTotal
     playerTotal += isolateValue(card);
   });
   handlePlayerAces();
-
   dealerHand.forEach(function(card){
     //Sum up the points, and apply to playerTotal
     dealerTotal += isolateValue(card);
   });
   handleDealerAces();
-
-  console.log(dealerTotal);
-  console.log(playerTotal);
-  console.log(" ");
 }
 
 //Create helper function to check win conditions with two variables being arguments (playerTotal, dealerTotal)
@@ -195,9 +193,16 @@ function handlePlayerHandElem(){
 }
 
 function handleDealerHandElem(){
-  let dealerHandCopy = ['XX'];
+  let dealerHandCopy = [];
   let output = '';
+
   dealerHand.forEach(function(card){
+    dealerHandCopy.push(card);
+  });
+
+  dealerHandCopy.splice(0, 1, "XX");
+
+  dealerHandCopy.forEach(function(card){
     output = output + `${card} | `;
   });
   dealerTotalElem.innerHTML = output;
