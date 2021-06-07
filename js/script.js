@@ -1,7 +1,6 @@
 /* PSEUDO CODE FOR PROJECT 1 */
 
 /*----- constants -----*/
-//Define a class that states the values of each card in terms of points.
 //Define the array of cards containing 52 cards.
 const sortedDeck = [
 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'cT', 'cJ', 'cQ', 'cK', 'cA', /* clubs */
@@ -187,7 +186,7 @@ function checkWinCons() {
 function handlePlayerHandElem(){
   let output = '';
   playerHand.forEach(function(card){
-    output = output + `${card} | `;
+    output = output + `${card}  `;
   });
   playerTotalElem.innerText = output;
 }
@@ -203,7 +202,7 @@ function handleDealerHandElem(){
   dealerHandCopy.splice(0, 1, "XX");
 
   dealerHandCopy.forEach(function(card){
-    output = output + `${card} | `;
+    output = output + `${card}  `;
   });
   dealerTotalElem.innerHTML = output;
 }
@@ -212,7 +211,7 @@ function handleDealerHandElem(){
 function handleWinLoss() {
     function updateWinLossWindow(){
       //set the Win Loss ratio header to a string of 'playerWins : dealerWins'
-      winLossElem.innerText = `${playerWins} : ${dealerWins}`;
+      winLossElem.innerText = `Player Wins = ${playerWins} : Dealer Wins = ${dealerWins}`;
     }
     //Setting Windows to reflect game result
     if (gameState === 'Player Wins'){
@@ -248,8 +247,12 @@ function render() {
   //set reset button property to hidden
   if (gameState === 0){
     resetButtonElem.style.visibility = 'hidden';
+    standButtonElem.style.visibility = 'visible';
+    hitButtonElem.style.visibility = 'visible';
   } else {
     resetButtonElem.style.visibility = 'visible';
+    standButtonElem.style.visibility = 'hidden';
+    hitButtonElem.style.visibility = 'hidden';
   }
 }
 

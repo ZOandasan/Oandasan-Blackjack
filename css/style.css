@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: 100%;
+  grid-template-rows: 20% 20% 20% 20% 10%;
+  height: 100vh;
+  margin: 0;
+  font-family: Helvetica;
+}
+
+header, footer, aside, main, div {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
