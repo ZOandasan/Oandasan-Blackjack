@@ -51,15 +51,11 @@ initialize();
 
 //Initialize the state variables in the initialize function.
 function initialize(){
+  //Set gameState to zero
+  gameState = 0;
   //Set playerHand and dealerHand as empty arrays
   dealerHand = [];
   playerHand = [];
-  //set reset button property to hidden
-  if (gameState === 0){
-    resetButtonElem.style.visibility = 'hidden';
-  } else {
-    resetButtonElem.style.visibility = 'visible';
-  }
   //Set the shuffledCards array as the result of the manage Deck of cards function.
   shuffledDeck = manageDeck();
   //Call the function that deals out starting hands
@@ -99,7 +95,6 @@ function deterinePoints() {
   function isolateValue(card){
     let cardValue = card.split('');
     let value = cardValue.pop();
-    console.log('Value = ' + value);
     if (value === 'A') {
       return 11;
     } else if (value === '9') {
@@ -127,7 +122,6 @@ function deterinePoints() {
     //Sum up the points, and apply to playerTotal
     playerTotal += isolateValue(card);
     //Handle Aces
-    console.log(playerTotal);
     if (playerHand.some(function(card){ return card === 'cA' }) && playerTotal > 21 ){
       playerTotal -= 10; 
     }
@@ -147,7 +141,6 @@ function deterinePoints() {
     //Sum up the points, and apply to playerTotal
     dealerTotal += isolateValue(card);
     //Handle Aces
-    console.log(dealerTotal);
     if (dealerHand.some(function(card){ return card === 'cA' }) && dealerTotal > 21 ){
       dealerTotal -= 10; 
     }
@@ -164,36 +157,62 @@ function deterinePoints() {
 }
 
 //Create helper function to check win conditions with two variables being arguments (playerTotal, dealerTotal)
-function checkWinCons () {}
-    //if playerTotal is greater than 21, set the game state equal to 'dealer wins'
-    //else if the dealerTotal is greater than 21, set the game state equal to 'player wins'
-    //else if gamestate is 'waiting to compare' compare the totals of player and dealer. 
-      //If the player is higher than dealer, set the game state equal to 'player wins'
-      //else, set the game state equal to 'dealer wins'
-//
+function checkWinCons() {
+  //if playerTotal is greater than 21, set the game state equal to 'dealer wins'
+  if (playerTotal > 21){
+    gameState = 'Dealer Wins';
+  } //else if the dealerTotal is greater than 21, set the game state equal to 'player wins'
+  else if (dealerTotal > 21){
+    gameState = 'Player Wins';
+  } //else if gamestate is 'waiting to compare' compare the totals of player and dealer.
+  else if (gameState === 'Comparing'){
+    if (playerTotal > dealerTotal){
+      gameState = 'Player Wins';
+    } else if (dealerTotal > playerTotal){
+      gameState = 'Dealer Wins';
+    } else {
+      gameState = 'Tie Game'
+    }
+  }
+}
 
 //Create a helper function to calculate and display win loss ratio
-function handleWinLoss() {}
-    //if gameState = playerWins
-      //playerWins adds one
-    //else if gameState = dealerWins
-      //dealerWins adds one
-    //create an array with two values of [playerWins, dealerWins]
-    //set the Win Loss ratio header to a string of 'playerWins : dealerWins'
+function handleWinLoss() {
+    function updateWinLossWindow(){
+      //set the Win Loss ratio header to a string of 'playerWins : dealerWins'
+      winLossElem.innetText = `${playerWins} : ${dealerWins}`;
+    }
+    //Setting Windows to reflect game result
+    if (gameState === 'Player Wins'){
+      ++playerWins;
+      updateWinLossWindow();
+      currentTotalElem.innterText  = gameState;
+    } else if (gameState === 'Dealer Wins'){
+      ++dealerWins;
+      updateWinLossWindow();
+      currentTotalElem.innterText  = gameState;
+    } else if (gameState === 'Tie Game'){
+      currentTotalElem.innterText = gameState;
+    }
+}
 
 //Create a render function to apply the values to the interface.
 function render() {
+  //set reset button property to hidden
+  if (gameState === 0){
+    resetButtonElem.style.visibility = 'hidden';
+  } else {
+    resetButtonElem.style.visibility = 'visible';
+  }
+  //call Determine Points
   deterinePoints();
+  //assign images based on each of the values in playersHand
+  //assign images based on each of the values in dealersHand
+  //call Check Win Cons
+  checkWinCons();
+  //call handle Win Loss
+  handleWinLoss();
 }
-    //set DealerTotal equal to sumOfArray function with the dealers hand as the argument
-    //set PlayerTotal equal to sumOfArray function with the players hand as the argument
-    //assign images based on each of the values in playersHand
-    //assign images based on each of the values in dealersHand
-    //call checkWinCons function with the playersHand
-    //If the gamestate is 'dealer wins'
-      //callEndgame Function with argument of 'dealer wins'
-    //else if the gamestate is 'player wins'
-      //callEndgame Function with argument of 'player wins'
 
 //Create a function when the hit Me button is pressed
 function pressHit() {}
