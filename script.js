@@ -4,10 +4,10 @@
 //Define a class that states the values of each card in terms of points.
 //Define the array of cards containing 52 cards.
 const sortedDeck = [
-'c02', 'c03', 'c04', 'c05', 'c06', 'c07', 'c08', 'c09', 'c10', 'cJ', 'cQ', 'cK', 'cA', /* clubs */
-'s02', 's03', 's04', 's05', 's06', 's07', 's08', 's09', 's10', 'sJ', 'sQ', 'sK', 'sA', /* spades */
-'d02', 'd03', 'd04', 'd05', 'd06', 'd07', 'd08', 'd09', 'd10', 'dJ', 'dQ', 'dK', 'dA', /* diamonds */
-'h02', 'h03', 'h04', 'h05', 'h06', 'h07', 'h08', 'h09', 'h10', 'hJ', 'hQ', 'hK', 'hA', /* hearts */];
+'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'cT', 'cJ', 'cQ', 'cK', 'cA', /* clubs */
+'s2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 'sT', 'sJ', 'sQ', 'sK', 'sA', /* spades */
+'d2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'dT', 'dJ', 'dQ', 'dK', 'dA', /* diamonds */
+'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'h8', 'h9', 'hT', 'hJ', 'hQ', 'hK', 'hA', /* hearts */];
 
 /*----- app's state (variables) -----*/
 //Define an empty array called shuffledDeck
@@ -39,24 +39,22 @@ const standButtonElem = document.getElementById('btn_stand');
 const resetButtonElem = document.getElementById('btn_reset');
 //Cash the Two DIV elements that will be storing the card images
 
-
 /*----- event listeners -----*/
 //Deal with the button event listeners
 document.querySelector('#btn_reset').addEventListener('click', initialize);//reset game goes to the initialize function
 document.querySelector('#btn_hit').addEventListener('click', pressHit); //Hit me goes to the Hit me button pressed function
 document.querySelector('#btn_stand').addEventListener('click', pressStand); //Stand goes to the stand button pressed function
 
-
-
 /*----- functions -----*/
 //Call Initialize Function
 initialize();
+deterinePoints();
 
 //Initialize the state variables in the initialize function.
 function initialize(){
   //Set playerHand and dealerHand as empty arrays
-  playerHand = [];
   dealerHand = [];
+  playerHand = [];
   //set reset button property to hidden
   if (gameState === 0){
     resetButtonElem.style.visibility = 'hidden';
@@ -85,9 +83,6 @@ function manageDeck() {
   return shuffledArr;
 }
     
-    
-    
-
 //Create helper function to deal out starting hands
 function dealStartHands() {
   //Pop the last two elements of the shuffledCards array into the playerHand array
@@ -98,16 +93,69 @@ function dealStartHands() {
   dealerHand.push(shuffledDeck.pop());
 }
     
+function deterinePoints() {
+  playerTotal = 0;
+  dealerTotal = 0;
+  //Create a function substituting the card literal with its points.
+  function isolateValue(card){
+    console.log(card)
+    let cardValue = card.split('');
+    let value = cardValue.pop();
+    if (value === 'A') {
+      return 11;
+    } else if (value === '9') {
+      return 9;
+    } else if (value === '8') {
+      return 8;
+    } else if (value === '7') {
+      return 7;
+    } else if (value === '6') {
+      return 6;
+    } else if (value === '5') {
+      return 5;
+    } else if (value === '4') {
+      return 4;
+    } else if (value === '3') {
+      return 3;
+    } else if (value === '2') {
+      return 2;
+    } else {
+      return 10;
+    }
+  }
+  
+  playerHand.forEach(function(card){
+    //Sum up the points, and apply to playerTotal
+    let total;
+    total += isolateValue(card);
+    //Handle Aces
+    /*
+    console.log(total);
+    if (playerHand.some(function(card){ return card === 'cA' }) && total > 21 ){
+      console.log('Working');
+    }
+    */
+  });
+  
+  
+  dealerHand.forEach(function(card){
+    //Sum up the points, and apply to dealerTotal
+    let total;
+    total += isolateValue(card);
+    //Handle Aces
+
+  });
+}
 
 //Create helper function to determine the sum of an array. Accept an array as the sole argument
 function sumArray() {}
-    //Create a new array substituting the card literal with its points.
-    //Sum up the new array, and apply to new Variable called cardTotal
     //if the hand has the Ace of Diamonds and the cardTotal is over 21, reduce points by 10.
     //if the hand has the Ace of Hearts and the cardTotal is over 21, reduce points by 10.
     //if the hand has the Ace of Spades and the cardTotal is over 21, reduce points by 10.
     //if the hand has the Ace of Clubs and the cardTotal is over 21, reduce points by 10.
-    //Return cardTotal
+
+
+
 
 //Create helper function to check win conditions with two variables being arguments (playerTotal, dealerTotal)
 function checkWinCons (playerTotal, dealerTotal) {}
