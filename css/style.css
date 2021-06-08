@@ -11,7 +11,7 @@
 body {
   display: grid;
   gap: 1px;
-  grid-template-rows: 16% 25% 18% 20% 7% 5%;
+  grid-template-rows: 16% 25% 18% 20% 7% 10%;
   height: 100vh;
   margin: 0;
   font-family: Helvetica;
