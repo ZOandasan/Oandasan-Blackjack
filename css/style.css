@@ -37,7 +37,7 @@ div#blackjack_header > h3 {
   color: var(--accent-dark);
 }
 
-div#win_loss_header > h2#win_loss {
+div#bid_header > h2#bidding {
   background-color: var(--accent-blue);
   color: var(--accent-light);
 }
