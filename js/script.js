@@ -4,8 +4,6 @@ const ranks = ['02', '03', '04', '05', '06', '07', '08', '09', '10', 'J', 'Q', '
 
 // Build a 'master' deck of 'card' objects used to create shuffled decks
 const masterDeck = buildMasterDeck();
-//Render The MasterDeck Constant before any and all commands
-
 
 /*----- app's state (variables) -----*/
 let shuffledDeck;
@@ -91,7 +89,7 @@ function determinePoints(){
     playerTotal += card.value;
   });
   dealerHand.forEach(function(card){
-    dealerTotal += card.calue
+    dealerTotal += card.value;
   });
   handlePlayerAces();
   handleDealerAces();
@@ -204,10 +202,10 @@ function pressStand(){
   if (gameState === 0){
     while (dealerTotal < 16){
     dealerHand.push(shuffledDeck.pop());
-    deterinePoints();
+    render();
     }
     if (dealerTotal < 22){
-      gameState = 'Comparing'
+      gameState = 'Comparing';
     }
     render();
   }
