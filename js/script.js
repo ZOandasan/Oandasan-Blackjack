@@ -192,6 +192,15 @@ function renderDealerHand(){
   dealerCardsElem.innerHTML = cardsHtml;
 }
 
+function renderDealerHandEnd(){
+  dealerCardsElem.innerHTML = "";
+  let cardsHtml = "";
+  dealerHand.forEach(function(card) {
+    cardsHtml += `<div class="card ${card.face}"></div>`;
+  });
+  dealerCardsElem.innerHTML = cardsHtml;
+}
+
 function handleTotalElem(){
   if (gameState === "Waiting For Bid") {
     totalElem.innerText = `Please Select Your Bet`;
@@ -221,10 +230,13 @@ function checkWinCons() {
   else if (gameState === 'Comparing'){
     if (playerTotal > dealerTotal){
       gameState = 'Player Wins';
+      renderDealerHandEnd();
     } else if (dealerTotal > playerTotal){
       gameState = 'Dealer Wins';
+      renderDealerHandEnd();
     } else {
       gameState = 'Tie Game'
+      renderDealerHandEnd();
     }
   }
 }
