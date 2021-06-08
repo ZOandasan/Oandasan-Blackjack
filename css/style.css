@@ -3,14 +3,15 @@
 }
 
 :root {
-    --accent-light: rgba(243, 230, 49, 1); /* declares object that other styles can call to */
-    --accent-dark: rgba(50, 0, 50, .8)
+    --accent-yellow: rgba(243, 230, 49, 1); /* declares object that other styles can call to */
+    --accent-blue: rgba(0, 0, 100, .8);
+    --accent-light: rgba(220, 220, 220, 1);
 }
 
 body {
   display: grid;
   gap: 1px;
-  grid-template-rows: 25% 15% 20% 20% 10%;
+  grid-template-rows: 25% 15% 20% 10% 10% 10%;
   height: 100vh;
   margin: 0;
   font-family: Helvetica;
@@ -28,15 +29,16 @@ div#blackjack_header {
   margin: 5px;
   font: Georgia, Arial, Sans;
   color: black;
-  background-color: var(--accent-light);
+  background-color: var(--accent-yellow);
 }
 
 div#blackjack_header > h3 {
   background-color: white;
+  color: var(--accent-dark);
 }
 
 div#win_loss_header > h2#win_loss {
-  background-color: var(--accent-dark);
+  background-color: var(--accent-blue);
   color: var(--accent-light);
 }
 
@@ -46,12 +48,12 @@ button {
   font-weight: bold;
   padding: 2vmin;
   margin-top: 4vmin;
-  background-color: var(--accent-light);
-  color: var(--accent-dark);
+  background-color: var(--accent-yellow);
+  color: var(--accent-blue);
   border-radius: 30%;
 }
 
 button:hover {
-  background-color: var(--accent-dark);
-  color: var(--accent-light);
+  background-color: var(--accent-blue);
+  color: var(--accent-yellow);
 }

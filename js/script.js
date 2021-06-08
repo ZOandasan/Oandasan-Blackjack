@@ -31,6 +31,7 @@ const winLossElem = document.getElementById('win_loss');
 //Cash the current total element
 const playerTotalElem = document.getElementById('player_total');
 const dealerTotalElem = document.getElementById('dealer_total')
+const totalElem = document.getElementById('title_total')
 //Cash the Hit Me & Stand & Reset Game buttons
 const hitButtonElem = document.getElementById('btn_hit');
 const standButtonElem = document.getElementById('btn_stand');
@@ -95,8 +96,7 @@ function deterinePoints() {
   function isolateValue(card){
     let cardValue = card.split('');
     let value = cardValue.pop();
-    if (value === 'A') {
-      return 11;
+    if (value === 'A') { return 11;
     } else if (value === '9') {
       return 9;
     } else if (value === '8') {
@@ -227,11 +227,15 @@ function handleWinLoss() {
 
 //Create a render function to apply the values to the interface.
 function render() {
+  
+
   //Set the current Total Elem to the Player Handle
   handlePlayerHandElem();
   handleDealerHandElem();
   //call Determine Points
   deterinePoints();
+
+  totalElem.innerText = `Player Total: ${playerTotal}`;
   //assign images based on each of the values in playersHand
 
 
