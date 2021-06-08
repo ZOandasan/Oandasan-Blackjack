@@ -233,12 +233,15 @@ function handleWinLoss() {
     //Setting Windows to reflect game result
     if (gameState === 'Player Wins'){
       biddingElem.innerText = `Player Wins the Round`;
-      playerBank = playerBank + playerBid + playerBid ;
+      playerBank += (playerBid * 2) ;
+      playerBid = 0;
     } else if (gameState === 'Dealer Wins'){
       biddingElem.innerText = `Dealer Wins the Round`;
+      playerBid = 0;
     } else if (gameState === 'Tie Game'){
       biddingElem.innerText = `Tie Game`;
-      playerBank = playerBid + playerBank;
+      playerBank += playerBid
+      playerBid = 0;
     }
 }
 
