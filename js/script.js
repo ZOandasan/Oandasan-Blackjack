@@ -13,12 +13,12 @@ let dealerTotal;
 let playerTotal;
 let gameState;
 
-let playerWins = 0;
-let dealerWins = 0;
+let playerBank;
+let playerBid;
 
 /*----- cached element references -----*/
 //Cashe the Text Elements
-const winLossElem = document.getElementById('win_loss');
+const biddingElem = document.getElementById('bidding');
 const playerCardsElem = document.getElementById('player_cards');
 const dealerCardsElem = document.getElementById('dealer_cards');
 const totalElem = document.getElementById('player_total');
@@ -26,23 +26,43 @@ const totalElem = document.getElementById('player_total');
 const hitButtonElem = document.getElementById('btn_hit');
 const standButtonElem = document.getElementById('btn_stand');
 const resetButtonElem = document.getElementById('btn_reset');
+const betFiveElem = document.getElementById('btn_five');
+const betTenElem = document.getElementById('btn_ten');
+const betTwentyElem = document.getElementById('btn_twenty');
 
 /*----- event listeners -----*/
-document.querySelector('#btn_reset').addEventListener('click', initialize);//reset game goes to the initialize function
+document.querySelector('#btn_reset').addEventListener('click', resetGame);//reset game goes to the initialize function
 document.querySelector('#btn_hit').addEventListener('click', pressHit); //Hit me goes to the Hit me button pressed function
 document.querySelector('#btn_stand').addEventListener('click', pressStand); //Stand goes to the stand button pressed function
+
+document.querySelector('#btn_five').addEventListener('click', pressFive);
+document.querySelector('#btn_ten').addEventListener('click', pressTen);
+document.querySelector('#btn_twenty').addEventListener('click', pressTwenty);
+
 
 /*----- functions -----*/
 initialize();
 
-function initialize(){
-  winLossElem.innerText = `Player Wins = ${playerWins} : Dealer Wins = ${dealerWins}`;
+function runTheGame(){
   gameState = 0;
-  dealerHand = [];
-  playerHand = [];
+  biddingElem.innerText = `Player Bank = ${playerBank} : Player Bid = ${playerBid}`;
   shuffledDeck = getNewShuffledDeck();
   dealStartHands();
   render();
+}
+
+function resetGame(){
+  playerBid = 0;
+  dealerHand = [];
+  playerHand = [];
+  gameState = "Waiting For Bid";
+  biddingElem.innerText = `Player Bank = ${playerBank} : Player Bid = ${playerBid}`;
+  render();
+}
+
+function initialize(){
+  playerBank = 250;
+  resetGame();
 }
 
 function getNewShuffledDeck() {
@@ -131,10 +151,24 @@ function handleButtonVisibility(){
     resetButtonElem.style.visibility = 'hidden';
     standButtonElem.style.visibility = 'visible';
     hitButtonElem.style.visibility = 'visible';
+    betFiveElem.style.visibility = 'hidden';
+    betTenElem.style.visibility = 'hidden';
+    betTwentyElem.style.visibility = 'hidden';
+  } else if (gameState === "Waiting For Bid") {
+    resetButtonElem.style.visibility = 'hidden';
+    standButtonElem.style.visibility = 'hidden';
+    hitButtonElem.style.visibility = 'hidden';
+    betFiveElem.style.visibility = 'visible';
+    betTenElem.style.visibility = 'visible';
+    betTwentyElem.style.visibility = 'visible';
   } else {
     resetButtonElem.style.visibility = 'visible';
     standButtonElem.style.visibility = 'hidden';
     hitButtonElem.style.visibility = 'hidden';
+    betFiveElem.style.visibility = 'hidden';
+    betFiveElem.style.visibility = 'hidden';
+    betTenElem.style.visibility = 'hidden';
+    betTwentyElem.style.visibility = 'hidden';
   }
 }
 
@@ -158,11 +192,19 @@ function renderDealerHand(){
   dealerCardsElem.innerHTML = cardsHtml;
 }
 
+function handleTotalElem(){
+  if (gameState === "Waiting For Bid") {
+    totalElem.innerText = `Please Select Your Bet`;
+  } else {
+    totalElem.innerText = `Player Total: ${playerTotal}`;
+  }
+} 
+
 function render(){
   renderPlayerHand();
   renderDealerHand();
   determinePoints();
-  totalElem.innerText = `Player Total: ${playerTotal}`;
+  handleTotalElem();
   checkWinCons();
   handleWinLoss();
   handleButtonVisibility();
@@ -190,13 +232,16 @@ function checkWinCons() {
 function handleWinLoss() {
     //Setting Windows to reflect game result
     if (gameState === 'Player Wins'){
-      ++playerWins;
-      winLossElem.innerText = `Player Wins the Round`;
+      biddingElem.innerText = `Player Wins the Round`;
+      playerBank += (playerBid * 2) ;
+      playerBid = 0;
     } else if (gameState === 'Dealer Wins'){
-      ++dealerWins;
-      winLossElem.innerText = `Dealer Wins the Round`;
+      biddingElem.innerText = `Dealer Wins the Round`;
+      playerBid = 0;
     } else if (gameState === 'Tie Game'){
-      winLossElem.innerText = `Tie Game`;
+      biddingElem.innerText = `Tie Game`;
+      playerBank += playerBid
+      playerBid = 0;
     }
 }
 
@@ -220,4 +265,22 @@ function pressStand(){
     }
     render();
   }
+}
+
+function pressFive(){
+  playerBank -= 5;
+  playerBid += 5;
+  runTheGame();
+}
+
+function pressTen(){
+  playerBank -= 10;
+  playerBid += 10;
+  runTheGame();
+}
+
+function pressTwenty(){
+  playerBank -= 20;
+  playerBid += 20;
+  runTheGame();
 }
