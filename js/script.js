@@ -94,16 +94,39 @@ function determinePoints(){
     dealerTotal += card.calue
   });
 
-  
+  //Handle Aces Logic.
 
+}
+
+function handleButtonVisibility(){
+  if (gameState === 0){
+    resetButtonElem.style.visibility = 'hidden';
+    standButtonElem.style.visibility = 'visible';
+    hitButtonElem.style.visibility = 'visible';
+  } else {
+    resetButtonElem.style.visibility = 'visible';
+    standButtonElem.style.visibility = 'hidden';
+    hitButtonElem.style.visibility = 'hidden';
+  }
 }
 
 function render(){
+  //HandlePlayerHandElem();
+  //HandleDealerHandElem();
   determinePoints();
+  totalElem.innerText = `Player Total: ${playerTotal}`;
+  //checkWinCons();
+  //handleWinLoss();
+  handleButtonVisibility();
 }
 
 function pressHit(){
-
+  if (gameState === 0){
+    if (playerTotal < 21){
+      playerHand.push(shuffledDeck.pop());
+    }
+    render();
+  }
 }
 
 function pressStand(){
