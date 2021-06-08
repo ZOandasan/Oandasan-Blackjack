@@ -138,23 +138,34 @@ function handleButtonVisibility(){
   }
 }
 
+function renderPlayerHand(){
+  playerCardsElem.innerHTML = "";
+  let cardsHtml = "";
+  playerHand.forEach(function(card) {
+    cardsHtml += `<div class="card ${card.face}"></div>`;
+  });
+  playerCardsElem.innerHTML = cardsHtml;
+}
+
+function renderDealerHand(){
+  dealerCardsElem.innerHTML = "";
+  let dealerHandClone = [...dealerHand];
+  dealerHandClone.pop();
+  let cardsHtml = `<div class="card back-blue"></div>`;
+  dealerHandClone.forEach(function(card) {
+    cardsHtml += `<div class="card ${card.face}"></div>`;
+  });
+  dealerCardsElem.innerHTML = cardsHtml;
+}
+
 function render(){
-  renderDeckInContainer(playerHand, playerCardsElem);
-  renderDeckInContainer(dealerHand, dealerCardsElem);
+  renderPlayerHand();
+  renderDealerHand();
   determinePoints();
   totalElem.innerText = `Player Total: ${playerTotal}`;
   checkWinCons();
   handleWinLoss();
   handleButtonVisibility();
-}
-
-function renderDeckInContainer(deck, container){
-  container.innerHTML = "";
-  let cardsHtml = "";
-  deck.forEach(function(card) {
-    cardsHtml += `<div class="card ${card.face}"></div>`;
-  });
-  container.innerHTML = cardsHtml;
 }
 
 function checkWinCons() {
