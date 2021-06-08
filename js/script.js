@@ -93,9 +93,39 @@ function determinePoints(){
   dealerHand.forEach(function(card){
     dealerTotal += card.calue
   });
+  handlePlayerAces();
+  handleDealerAces();
 
   //Handle Aces Logic.
+  function handlePlayerAces(){
+    if (playerHand.some(function(card){ return card.face === 'cA' }) && playerTotal > 21 ){
+      playerTotal -= 10; 
+    }
+    if (playerHand.some(function(card){ return card.face === 'dA' }) && playerTotal > 21 ){
+      playerTotal -= 10; 
+    }
+    if (playerHand.some(function(card){ return card.face === 'hA' }) && playerTotal > 21 ){
+      playerTotal -= 10; 
+    }
+    if (playerHand.some(function(card){ return card.face === 'sA' }) && playerTotal > 21 ){
+      playerTotal -= 10; 
+    }
+  }
 
+  function handleDealerAces(){
+    if (dealerHand.some(function(card){ return card.face === 'cA' }) && dealerTotal > 21 ){
+      dealerTotal -= 10; 
+    }
+    if (dealerHand.some(function(card){ return card.face === 'dA' }) && dealerTotal > 21 ){
+      dealerTotal -= 10; 
+    }
+    if (dealerHand.some(function(card){ return card.face === 'hA' }) && dealerTotal > 21 ){
+      dealerTotal -= 10; 
+    }
+    if (dealerHand.some(function(card){ return card.face === 'sA' }) && dealerTotal > 21 ){
+      dealerTotal -= 10; 
+    }
+  }
 }
 
 function handleButtonVisibility(){
@@ -111,13 +141,54 @@ function handleButtonVisibility(){
 }
 
 function render(){
-  //HandlePlayerHandElem();
-  //HandleDealerHandElem();
+  renderDeckInContainer(playerHand, playerCardsElem);
+  renderDeckInContainer(dealerHand, dealerCardsElem);
   determinePoints();
   totalElem.innerText = `Player Total: ${playerTotal}`;
-  //checkWinCons();
-  //handleWinLoss();
+  checkWinCons();
+  handleWinLoss();
   handleButtonVisibility();
+}
+
+function renderDeckInContainer(deck, container){
+  container.innerHTML = "";
+  let cardsHtml = "";
+  deck.forEach(function(card) {
+    cardsHtml += `<div class="card ${card.face}"></div>`;
+  });
+  container.innerHTML = cardsHtml;
+}
+
+function checkWinCons() {
+  //if playerTotal is greater than 21, set the game state equal to 'dealer wins'
+  if (playerTotal > 21){
+    gameState = 'Dealer Wins';
+  } //else if the dealerTotal is greater than 21, set the game state equal to 'player wins'
+  else if (dealerTotal > 21){
+    gameState = 'Player Wins';
+  } //else if gamestate is 'waiting to compare' compare the totals of player and dealer.
+  else if (gameState === 'Comparing'){
+    if (playerTotal > dealerTotal){
+      gameState = 'Player Wins';
+    } else if (dealerTotal > playerTotal){
+      gameState = 'Dealer Wins';
+    } else {
+      gameState = 'Tie Game'
+    }
+  }
+}
+
+function handleWinLoss() {
+    //Setting Windows to reflect game result
+    if (gameState === 'Player Wins'){
+      ++playerWins;
+      winLossElem.innerText = `Player Wins the Round`;
+    } else if (gameState === 'Dealer Wins'){
+      ++dealerWins;
+      winLossElem.innerText = `Dealer Wins the Round`;
+    } else if (gameState === 'Tie Game'){
+      winLossElem.innerText = `Tie Game`;
+    }
 }
 
 function pressHit(){
@@ -130,5 +201,14 @@ function pressHit(){
 }
 
 function pressStand(){
-
+  if (gameState === 0){
+    while (dealerTotal < 16){
+    dealerHand.push(shuffledDeck.pop());
+    deterinePoints();
+    }
+    if (dealerTotal < 22){
+      gameState = 'Comparing'
+    }
+    render();
+  }
 }
