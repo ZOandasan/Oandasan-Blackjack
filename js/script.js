@@ -111,37 +111,23 @@ function determinePoints(){
   dealerHand.forEach(function(card){
     dealerTotal += card.value;
   });
-  handlePlayerAces();
-  handleDealerAces();
+  handleAces(playerHand, playerTotal);
+  handleAces(dealerHand, dealerTotal);
 
   //Handle Aces Logic.
-  function handlePlayerAces(){
-    if (playerHand.some(function(card){ return card.face === 'cA' }) && playerTotal > 21 ){
-      playerTotal -= 10; 
-    }
-    if (playerHand.some(function(card){ return card.face === 'dA' }) && playerTotal > 21 ){
-      playerTotal -= 10; 
-    }
-    if (playerHand.some(function(card){ return card.face === 'hA' }) && playerTotal > 21 ){
-      playerTotal -= 10; 
-    }
-    if (playerHand.some(function(card){ return card.face === 'sA' }) && playerTotal > 21 ){
-      playerTotal -= 10; 
-    }
-  }
-
-  function handleDealerAces(){
-    if (dealerHand.some(function(card){ return card.face === 'cA' }) && dealerTotal > 21 ){
-      dealerTotal -= 10; 
-    }
-    if (dealerHand.some(function(card){ return card.face === 'dA' }) && dealerTotal > 21 ){
-      dealerTotal -= 10; 
-    }
-    if (dealerHand.some(function(card){ return card.face === 'hA' }) && dealerTotal > 21 ){
-      dealerTotal -= 10; 
-    }
-    if (dealerHand.some(function(card){ return card.face === 'sA' }) && dealerTotal > 21 ){
-      dealerTotal -= 10; 
+  function handleAces(hand, total){
+    if (hand === playerHand){
+      hand.forEach(function(card){
+        if (card.value > 10 && total > 21){
+          playerTotal -= 10;
+        }
+      });
+    } else if (hand === dealerHand){
+      hand.forEach(function(card){
+        if (card.value > 10 && total > 21){
+          dealerTotal -= 10;
+        }
+      });
     }
   }
 }
