@@ -229,8 +229,10 @@ function pressHit(){
   if (gameState === 0){
     if (playerTotal < 21){
       playerHand.push(shuffledDeck.pop());
+      render();
+    } else if (playerTotal === 21){
+      pressStand();
     }
-    render();
   }
 }
 
