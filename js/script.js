@@ -45,7 +45,7 @@ initialize();
 
 function runTheGame(){
   gameState = 0;
-  biddingElem.innerText = `Player Bank = ${playerBank} : Player Bid = ${playerBid}`;
+  biddingElem.innerText = `Player Bank = $ ${playerBank} : Player Bid = $ ${playerBid}`;
   shuffledDeck = getNewShuffledDeck();
   dealStartHands();
   render();
@@ -56,7 +56,7 @@ function resetGame(){
   dealerHand = [];
   playerHand = [];
   gameState = "Waiting For Bid";
-  biddingElem.innerText = `Player Bank = ${playerBank} : Player Bid = ${playerBid}`;
+  biddingElem.innerText = `Player Bank = $ ${playerBank} : Player Bid = $ ${playerBid}`;
   render();
 }
 
@@ -105,51 +105,16 @@ function determinePoints(){
   dealerHand.forEach(function(card){
     dealerTotal += card.value;
   });
-  //
-
-  handleAces(playerHand, playerTotal);
-  handleAces(dealerHand, dealerTotal);
+  playerTotal = handleAces(playerHand, playerTotal);
+  dealerTotal = handleAces(dealerHand, dealerTotal);
 
   function handleAces(hand, total){
-    if (hand === playerHand){
-      hand.forEach(function(card){
-        if (card.value > 10 && total > 21){
-          playerTotal -= 10;
-        }
-      });
-    } else if (hand === dealerHand){
-      hand.forEach(function(card){
-        if (card.value > 10 && total > 21){
-          dealerTotal -= 10;
-        }
-      });
-    }
-  }
-}
-
-function handleButtonVisibility(){
-  if (gameState === 0){
-    resetButtonElem.style.visibility = 'hidden';
-    standButtonElem.style.visibility = 'visible';
-    hitButtonElem.style.visibility = 'visible';
-    betFiveElem.style.visibility = 'hidden';
-    betTenElem.style.visibility = 'hidden';
-    betTwentyElem.style.visibility = 'hidden';
-  } else if (gameState === "Waiting For Bid") {
-    resetButtonElem.style.visibility = 'hidden';
-    standButtonElem.style.visibility = 'hidden';
-    hitButtonElem.style.visibility = 'hidden';
-    betFiveElem.style.visibility = 'visible';
-    betTenElem.style.visibility = 'visible';
-    betTwentyElem.style.visibility = 'visible';
-  } else {
-    resetButtonElem.style.visibility = 'visible';
-    standButtonElem.style.visibility = 'hidden';
-    hitButtonElem.style.visibility = 'hidden';
-    betFiveElem.style.visibility = 'hidden';
-    betFiveElem.style.visibility = 'hidden';
-    betTenElem.style.visibility = 'hidden';
-    betTwentyElem.style.visibility = 'hidden';
+    hand.forEach(function(card){
+      if (card.value > 10 && total > 21){
+        total -= 10;
+      }
+    });
+    return total;
   }
 }
 
@@ -188,16 +153,6 @@ function handleTotalElem(){
   } else {
     totalElem.innerText = `Player Total: ${playerTotal}`;
   }
-} 
-
-function render(){
-  renderPlayerHand();
-  renderDealerHand();
-  determinePoints();
-  handleTotalElem();
-  checkWinCons();
-  handleWinLoss();
-  handleButtonVisibility();
 }
 
 function checkWinCons() {
@@ -210,14 +165,12 @@ function checkWinCons() {
   else if (gameState === 'Comparing'){
     if (playerTotal > dealerTotal){
       gameState = 'Player Wins';
-      renderDealerHandEnd();
     } else if (dealerTotal > playerTotal){
       gameState = 'Dealer Wins';
-      renderDealerHandEnd();
     } else {
       gameState = 'Tie Game'
-      renderDealerHandEnd();
     }
+    renderDealerHandEnd();
   }
 }
 
@@ -234,6 +187,42 @@ function handleWinLoss() {
       playerBank += playerBid
       playerBid = 0;
     }
+}
+
+function handleButtonVisibility(){
+  if (gameState === 0){
+    resetButtonElem.style.visibility = 'hidden';
+    standButtonElem.style.visibility = 'visible';
+    hitButtonElem.style.visibility = 'visible';
+    betFiveElem.style.visibility = 'hidden';
+    betTenElem.style.visibility = 'hidden';
+    betTwentyElem.style.visibility = 'hidden';
+  } else if (gameState === "Waiting For Bid") {
+    resetButtonElem.style.visibility = 'hidden';
+    standButtonElem.style.visibility = 'hidden';
+    hitButtonElem.style.visibility = 'hidden';
+    betFiveElem.style.visibility = 'visible';
+    betTenElem.style.visibility = 'visible';
+    betTwentyElem.style.visibility = 'visible';
+  } else {
+    resetButtonElem.style.visibility = 'visible';
+    standButtonElem.style.visibility = 'hidden';
+    hitButtonElem.style.visibility = 'hidden';
+    betFiveElem.style.visibility = 'hidden';
+    betFiveElem.style.visibility = 'hidden';
+    betTenElem.style.visibility = 'hidden';
+    betTwentyElem.style.visibility = 'hidden';
+  }
+}
+
+function render(){
+  renderPlayerHand();
+  renderDealerHand();
+  determinePoints();
+  handleTotalElem();
+  checkWinCons();
+  handleWinLoss();
+  handleButtonVisibility();
 }
 
 function pressHit(){
