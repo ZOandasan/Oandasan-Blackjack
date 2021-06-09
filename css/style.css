@@ -11,15 +11,15 @@
 body {
   display: grid;
   gap: 1px;
-  grid-template-rows: 16% 25% 18% 20% 7% 10%;
+  grid-template-rows: 14% 20% 16% 18% 7% 10%;
   height: 100vh;
   margin: 0;
   font-family: Helvetica;
 }
 
 header, footer, div {
-  height: 10vmin;
-  font-size: 6vmin;
+  height: 8vmin;
+  font-size: 5vmin;
   justify-content: center;
   align-items: center;
   display: flex;

@@ -66,7 +66,6 @@ function initialize(){
 }
 
 function getNewShuffledDeck() {
-  // Create a copy of the masterDeck (leave masterDeck untouched!)
   const tempDeck = [...masterDeck];
   const newShuffledDeck = [];
   while (tempDeck.length) {
@@ -78,13 +77,10 @@ function getNewShuffledDeck() {
 
 function buildMasterDeck() {
   const deck = [];
-  // Use nested forEach to generate card objects
   suits.forEach(function(suit) {
     ranks.forEach(function(rank) {
       deck.push({
-        // The 'face' property maps to the library's CSS classes for cards
         face: `${suit}${rank}`,
-        // Setting the 'value' property for game of blackjack, not war
         value: Number(rank) || (rank === 'A' ? 11 : 10)
       });
     });
@@ -93,10 +89,8 @@ function buildMasterDeck() {
 }
 
 function dealStartHands(){
-   //Pop the last two elements of the shuffledCards array into the playerHand array
   playerHand.push(shuffledDeck.pop());
   playerHand.push(shuffledDeck.pop());
-  //Pop the last two elements of the shuffledCards array into the dealerHand array
   dealerHand.push(shuffledDeck.pop());
   dealerHand.push(shuffledDeck.pop());
 }
@@ -111,10 +105,11 @@ function determinePoints(){
   dealerHand.forEach(function(card){
     dealerTotal += card.value;
   });
+  //
+
   handleAces(playerHand, playerTotal);
   handleAces(dealerHand, dealerTotal);
 
-  //Handle Aces Logic.
   function handleAces(hand, total){
     if (hand === playerHand){
       hand.forEach(function(card){
@@ -206,13 +201,12 @@ function render(){
 }
 
 function checkWinCons() {
-  //if playerTotal is greater than 21, set the game state equal to 'dealer wins'
   if (playerTotal > 21){
     gameState = 'Dealer Wins';
-  } //else if the dealerTotal is greater than 21, set the game state equal to 'player wins'
+  }
   else if (dealerTotal > 21){
     gameState = 'Player Wins';
-  } //else if gamestate is 'waiting to compare' compare the totals of player and dealer.
+  }
   else if (gameState === 'Comparing'){
     if (playerTotal > dealerTotal){
       gameState = 'Player Wins';
@@ -228,7 +222,6 @@ function checkWinCons() {
 }
 
 function handleWinLoss() {
-    //Setting Windows to reflect game result
     if (gameState === 'Player Wins'){
       biddingElem.innerText = `Player Wins the Round`;
       playerBank += (playerBid * 2) ;
