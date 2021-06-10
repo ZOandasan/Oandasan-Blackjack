@@ -16,10 +16,10 @@ https://zoandasan.github.io/Oandasan-Project-1/
 HTML, CSS, JavaScript
 
 ### Screenshots:
-<img src="https://i.imgur.com/mB3GkPJ.png" width:"450">
-<img src="https://i.imgur.com/6mOmNRF.png" width:"450">
-<img src="https://i.imgur.com/OznrjK7.png" width:"450">
 
+<td> <img src="https://i.imgur.com/mB3GkPJ.png" width:"450"> </td>
+<td> <img src="https://i.imgur.com/6mOmNRF.png" width:"450"> </td>
+<td> <img src="https://i.imgur.com/OznrjK7.png" width:"450"> </td>
 
 ### Next Steps:
 There are alternate bidding rules, namely split and insurance. Incorperating that into the game would be a nice Next Step. However, given I was unfamiliar with these alternate rules, I decided to forgo them for now.

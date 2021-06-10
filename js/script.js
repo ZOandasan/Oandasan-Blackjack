@@ -29,11 +29,15 @@ const resetButtonElem = document.getElementById('btn_reset');
 const betFiveElem = document.getElementById('btn_five');
 const betTenElem = document.getElementById('btn_ten');
 const betTwentyElem = document.getElementById('btn_twenty');
+//Cashe for music
+const musicElem = document.getElementById('auto_music');
+const checkbox = document.getElementById('music_check');
 
 /*----- event listeners -----*/
 document.querySelector('#btn_reset').addEventListener('click', resetGame);//reset game goes to the initialize function
 document.querySelector('#btn_hit').addEventListener('click', pressHit); //Hit me goes to the Hit me button pressed function
 document.querySelector('#btn_stand').addEventListener('click', pressStand); //Stand goes to the stand button pressed function
+checkbox.addEventListener('change', handleMusic);
 
 document.querySelector('#btn_five').addEventListener('click', pressFive);
 document.querySelector('#btn_ten').addEventListener('click', pressTen);
@@ -271,5 +275,13 @@ function pressTwenty(){
     playerBank -= 20;
     playerBid += 20;
     runTheGame();
+  }
+}
+
+function handleMusic(){
+  if (checkbox.checked) {
+    musicElem.play();
+  } else {
+    musicElem.pause();
   }
 }
