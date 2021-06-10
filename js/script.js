@@ -250,19 +250,26 @@ function pressStand(){
 }
 
 function pressFive(){
-  playerBank -= 5;
-  playerBid += 5;
-  runTheGame();
+  if (playerBank > 4){
+    playerBank -= 5;
+    playerBid += 5;
+    runTheGame();
+  }
+  
 }
 
 function pressTen(){
-  playerBank -= 10;
-  playerBid += 10;
-  runTheGame();
+  if (playerBank > 9){
+    playerBank -= 10;
+    playerBid += 10;
+    runTheGame();
+  }
 }
 
 function pressTwenty(){
-  playerBank -= 20;
-  playerBid += 20;
-  runTheGame();
+  if (playerBank > 19){
+    playerBank -= 20;
+    playerBid += 20;
+    runTheGame();
+  }
 }
