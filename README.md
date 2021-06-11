@@ -21,6 +21,10 @@ HTML, CSS, JavaScript
 <td> <img src="https://i.imgur.com/6mOmNRF.png" width:"450"> </td>
 <td> <img src="https://i.imgur.com/OznrjK7.png" width:"450"> </td>
 
+### Wireframe:
+
+<img src="https://i.imgur.com/5awkhpS.jpg" width:"450">
+
 ### Next Steps:
-There are alternate bidding rules, namely split and insurance. Incorperating that into the game would be a nice Next Step. However, given I was unfamiliar with these alternate rules, I decided to forgo them for now.
+There are alternate bidding rules, namely split and insurance. Incorperating that into the game would be a nice Next Step. However, given I was unfamiliar with these alternate rules, I decided to forgo them for now. Adding in audio on click of buttons would be a further addition.
 
